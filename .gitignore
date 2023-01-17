@@ -1,3 +1,5 @@
 __pycache__/
 .vscode/
 adminsdk.json
+.env
+run_dev.sh
