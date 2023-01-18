@@ -20,7 +20,7 @@ def ceate_quiz(
     return created_quiz
 
 
-@router.post("/get/{quiz_id}")
+@router.get("/get/{quiz_id}")
 def get_quiz(
     quiz_id: str,
     _=Depends(get_current_user),
