@@ -41,7 +41,7 @@ def answer_quiz(
     return {"msg": "submitted sucessfully"}
 
 
-@router.post("/results/{quiz_id}")
+@router.get("/results/{quiz_id}")
 def get_results(
     quiz_id: str,
     current_user=Depends(get_current_user),
