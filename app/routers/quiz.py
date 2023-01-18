@@ -1,7 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException
 
 from ..services.quiz import QuizService
-from ..models.quiz import CreateQuizInput, AnswerQuizInput
+from ..models.quiz import (
+    CreateQuizInput,
+    AnswerQuizInput,
+    GetQuizOutput,
+    CreateQuizOutput,
+)
 from ..dependencies import get_current_user, get_quiz_service
 
 router = APIRouter(
@@ -15,9 +20,9 @@ def ceate_quiz(
     create_quiz_input: CreateQuizInput,
     current_user=Depends(get_current_user),
     quiz_service: QuizService = Depends(get_quiz_service),
-):
+) -> CreateQuizOutput:
     created_quiz = quiz_service.create_quiz(create_quiz_input, current_user)
-    return created_quiz
+    return CreateQuizOutput.parse_obj(created_quiz)
 
 
 @router.get("/get/{quiz_id}")
@@ -25,9 +30,9 @@ def get_quiz(
     quiz_id: str,
     _=Depends(get_current_user),
     quiz_service: QuizService = Depends(get_quiz_service),
-):
+) -> GetQuizOutput:
     quiz = quiz_service.get_quiz_or_error(quiz_id)
-    return quiz
+    return GetQuizOutput.parse_obj(quiz)
 
 
 @router.post("/answer/{quiz_id}")

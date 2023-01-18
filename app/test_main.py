@@ -70,7 +70,7 @@ def test_create_quiz_success():
                     "question": "string",
                     "options": ["string"],
                     "correct_options": [0],
-                    "score": 0,
+                    "score": 10,
                 }
             ],
         },
@@ -92,7 +92,7 @@ def test_create_quiz_duplicate_id_failure():
                     "question": "string",
                     "options": ["string"],
                     "correct_options": [0],
-                    "score": 0,
+                    "score": 10,
                 }
             ],
         },
