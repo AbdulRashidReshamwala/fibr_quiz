@@ -34,17 +34,21 @@ class QuizService:
         quiz = self.get_quiz_or_error(quiz_id)
         self._validate_submitted_answers(submitted_answers, quiz)
         score = self._calculate_score(submitted_answers, quiz)
-        self._update_score(user, quiz, score)
+        self._update_score(user, quiz, score, submitted_answers)
         return score
 
-    def _update_score(self, user, quiz, score):
+    def _update_score(self, user, quiz, score, submitted_answers):
         answer_ref = (
             self.db.collection("quiz")
             .document(quiz["id"])
             .collection("answers")
             .document(user["uid"])
         )
-        # if answer_ref.exists()
+
+        if answer_ref.get().exists:
+            raise HTTPException(
+                status_code=400, detail="already submitted answer cannot submit again"
+            )
 
         self.db.collection("quiz").document(quiz["id"]).collection("answers").document(
             user["uid"]
@@ -54,6 +58,7 @@ class QuizService:
                 "id": user["uid"],
                 "email": user["email"],
                 "submitted_on": firestore.SERVER_TIMESTAMP,
+                "submitted_answer": submitted_answers.dict()["answers"],
             }
         )
 
