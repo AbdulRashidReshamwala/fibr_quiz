@@ -11,7 +11,7 @@ app = FastAPI()
 
 @app.get("/health", tags=["health_check"], name="Health Check")
 def read_root() -> str:
-    return "Hello World 2"
+    return {"msg": "Hello World"}
 
 
 @app.get("/")
