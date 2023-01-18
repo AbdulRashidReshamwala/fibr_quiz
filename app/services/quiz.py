@@ -77,11 +77,11 @@ class QuizService:
             )
 
     def get_results(self, quiz_id):
-        res = [
+        results = [
             e.to_dict()
             for e in self.db.collection("quiz")
             .document(quiz_id)
             .collection("answers")
             .stream()
         ]
-        return res
+        return results
