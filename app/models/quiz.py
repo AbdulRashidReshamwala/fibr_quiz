@@ -6,6 +6,7 @@ class QuizQuestions(BaseModel):
     question: str
     options: conlist(str, min_items=1)
     correct_options: conlist(NonNegativeInt, min_items=1)
+    score: NonNegativeInt
 
     @validator("correct_options")
     @classmethod
@@ -22,3 +23,11 @@ class CreateQuizInput(BaseModel):
     id: Optional[str] = None
     title: str
     questions: list[QuizQuestions]
+
+
+class AnswerInput(BaseModel):
+    selected_options: conlist(NonNegativeInt, min_items=1)
+
+
+class AnswerQuizInput(BaseModel):
+    answers: list[AnswerInput]
